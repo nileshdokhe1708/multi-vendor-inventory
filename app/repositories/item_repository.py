@@ -24,4 +24,3 @@ class ItemRepository(BaseRepository):
 
     def delete(self, item: Item):
         self.db.delete(item)
-        self.db.commit()
