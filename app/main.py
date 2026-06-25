@@ -23,7 +23,11 @@ from app.exceptions.handlers import (
     vendor_not_found_handler,
     vendor_mapping_handler
 )
+from app.core import logger
 
+from app.middleware.logging_middleware import (
+    log_requests
+)
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
@@ -48,6 +52,7 @@ app.add_exception_handler(
     VendorItemMappingException,
     vendor_mapping_handler
 )
+app.middleware("http")(log_requests)
 @app.get("/")
 def health_check():
     return {
