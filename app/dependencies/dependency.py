@@ -1,0 +1,14 @@
+from app.core.database import SessionLocal
+def get_db():
+    """
+    Database session dependency.
+    Automatically closes session after request.
+    """
+
+    db = SessionLocal()
+
+    try:
+        yield db
+
+    finally:
+        db.close()
