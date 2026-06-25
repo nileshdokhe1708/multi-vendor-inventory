@@ -12,6 +12,18 @@ from app.api.item_vendor_routes import (
 from app.api.order_routes import (
     router as order_router
 )
+from app.exceptions.custom_exceptions import (
+    ItemNotFoundException,
+    VendorNotFoundException,
+    VendorItemMappingException
+)
+
+from app.exceptions.handlers import (
+    item_not_found_handler,
+    vendor_not_found_handler,
+    vendor_mapping_handler
+)
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
@@ -22,6 +34,20 @@ app.include_router(vendor_router)
 app.include_router(item_vendor_router)
 app.include_router(order_router)
 
+app.add_exception_handler(
+    ItemNotFoundException,
+    item_not_found_handler
+)
+
+app.add_exception_handler(
+    VendorNotFoundException,
+    vendor_not_found_handler
+)
+
+app.add_exception_handler(
+    VendorItemMappingException,
+    vendor_mapping_handler
+)
 @app.get("/")
 def health_check():
     return {

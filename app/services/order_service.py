@@ -1,3 +1,4 @@
+from app.exceptions.custom_exceptions import VendorNotFoundException, ItemNotFoundException, VendorItemMappingException
 from app.models.purchase_order import PurchaseOrder
 
 from app.repositories.order_repository import (OrderRepository)
@@ -36,14 +37,18 @@ class OrderService:
         )
 
         if not item:
-            raise ValueError("Item not found")
+            raise ItemNotFoundException(
+                "Item not found"
+            )
 
         vendor = self.vendor_repository.get_by_id(
             order_data.vendor_id
         )
 
         if not vendor:
-            raise ValueError("Vendor not found")
+            raise VendorNotFoundException(
+                "Vendor not found"
+            )
 
         mapping = (
             self.mapping_repository.get_vendor_mapping(
@@ -53,7 +58,7 @@ class OrderService:
         )
 
         if not mapping:
-            raise ValueError(
+            raise VendorItemMappingException(
                 "Vendor not linked with item"
             )
 

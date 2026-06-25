@@ -1,3 +1,4 @@
+from app.exceptions.custom_exceptions import ItemNotFoundException, VendorNotFoundException
 from app.repositories.item_repository import ItemRepository
 from app.repositories.vendor_repository import VendorRepository
 from app.repositories.item_vendor_repository import (
@@ -26,12 +27,16 @@ class ItemVendorService:
         item = self.item_repository.get_by_id(item_id)
 
         if not item:
-            raise ValueError("Item not found")
+            raise ItemNotFoundException(
+                "Item not found"
+            )
 
         vendor = self.vendor_repository.get_by_id(vendor_id)
 
         if not vendor:
-            raise ValueError("Vendor not found")
+            raise VendorNotFoundException(
+                "Vendor not found"
+            )
 
         return self.mapping_repository.create_link(
             item_id,
