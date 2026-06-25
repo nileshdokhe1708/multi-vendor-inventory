@@ -2,32 +2,133 @@
 
 ## Overview
 
-Backend service to manage inventory items, vendors, and purchase orders.
+A FastAPI-based backend application that manages inventory items, vendors, and purchase orders.
+
+The system supports:
+
+* Centralized stock management
+* Vendor management
+* Many-to-many relationship between Items and Vendors
+* Purchase Order creation
+* Vendor validation before order creation
+
+---
 
 ## Tech Stack
 
-- Python
-- FastAPI
-- SQLAlchemy
-- PostgreSQL
-- Pytest
+* Python
+* FastAPI
+* SQLAlchemy
+* SQLite (Development)
+* PostgreSQL Ready
+* Pytest
 
-## Features
-
-- Item Management
-- Vendor Management
-- Item-Vendor Association
-- Purchase Order Creation
-- Stock Tracking
+---
 
 ## Architecture
 
-- Layered Architecture
-- Repository Pattern
-- Service Layer
-- Dependency Injection
-- SOLID Principles
+Layered Architecture:
 
-## Project Status
+API Layer
+↓
+Service Layer
+↓
+Repository Layer
+↓
+Database Layer
 
-Project Initialization Completed
+Design Principles:
+
+* SOLID Principles
+* Repository Pattern
+* Dependency Injection
+* Separation of Concerns
+
+---
+
+## Features
+
+### Stock Management
+
+* Create Item
+* Get Items
+
+### Vendor Management
+
+* Create Vendor
+* Get Vendors
+
+### Item Vendor Association
+
+* Link Vendors to Items
+
+### Purchase Orders
+
+* Create Purchase Orders
+* Validate Vendor Mapping
+
+---
+
+## API Endpoints
+
+### Items
+
+POST /items
+
+GET /items
+
+### Vendors
+
+POST /vendors
+
+GET /vendors
+
+### Item Vendor Mapping
+
+POST /item-vendor/link
+
+### Purchase Orders
+
+POST /orders
+
+---
+The application uses SQLAlchemy ORM and is database agnostic.
+
+For development, SQLite is used.
+
+To use PostgreSQL, update DATABASE_URL in .env and ensure PostgreSQL is installed and running.
+## Running Application
+
+Create Virtual Environment
+
+python -m venv .venv
+
+Activate Environment
+
+Windows:
+
+.venv\Scripts\activate
+
+Install Dependencies
+
+pip install -r requirements.txt
+
+Run Application
+
+uvicorn app.main:app --reload
+
+Swagger UI
+
+http://localhost:8000/docs
+
+---
+
+## Running Tests
+
+pytest
+
+---
+
+## Author
+
+Nilesh Dokhe
